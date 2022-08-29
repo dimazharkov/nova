@@ -1,0 +1,14 @@
+uvicorn[standard]==0.15.0
+gunicorn==20.1.0
+fastapi==0.68.1
+asgiref==3.4.0
+click==8.0.1
+colorama==0.4.4
+greenlet==1.1.0
+h11==0.12.0
+psycopg2-binary==2.9.1
+pydantic==1.8.2
+SQLAlchemy==1.4.19
+starlette==0.14.2
+typing-extensions==3.10.0.0
+sqlalchemy_utils==0.38

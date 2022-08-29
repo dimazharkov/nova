@@ -1,0 +1,30 @@
+from sqlalchemy import Column, Integer, String, Boolean, Date, ForeignKey, Numeric
+from sqlalchemy.orm import relationship
+from core.model import Model
+
+class Order(Model):
+    number = Column(Integer)
+    reference_no = Column(String)
+    external_id = Column(Integer)
+    transport_price = Column(Numeric)
+    transport_price_currency_id = Column(Integer, ForeignKey("currency.id"))
+    transport_price_currency = relationship("Currency", foreign_keys=[transport_price_currency_id])
+    cargo_value = Column(Numeric)
+    cargo_value_currency_id = Column(Integer, ForeignKey("currency.id"))
+    cargo_value_currency = relationship("Currency", foreign_keys=[cargo_value_currency_id])
+    owner_id = Column(Integer, ForeignKey("company.id"))
+    owner = relationship("Company", foreign_keys=[owner_id])
+    customer_id = Column(Integer, ForeignKey("company.id"))
+    customer = relationship("Company", foreign_keys=[customer_id])
+    shipper_id = Column(Integer, ForeignKey("company.id"))
+    shipper = relationship("Company", foreign_keys=[shipper_id])
+    consignee_id = Column(Integer, ForeignKey("company.id"))
+    consignee = relationship("Company", foreign_keys=[consignee_id])
+    incoterm_id = Column(Integer, ForeignKey("incoterm.id"))
+    incoterm = relationship("Incoterm")
+    transport_mode_id = Column(Integer, ForeignKey("transportmode.id"))
+    transport_mode = relationship("TransportMode")
+    transport_option_id = Column(Integer, ForeignKey("transportoption.id"))
+    transport_option = relationship("TransportOption")
+    status_id = Column(Integer, ForeignKey("status.id"))
+    status = relationship("Status")

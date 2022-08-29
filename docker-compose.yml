@@ -1,0 +1,53 @@
+version: '3.5'
+
+services:
+  backend:
+    container_name: uvicorn
+    command: /start-reload.sh
+    build: .
+    volumes:
+      - ./app:/app
+    ports:
+      - "${UVICORN_PORT}:80"
+    networks:
+      - nova
+    restart: unless-stopped
+
+  postgres:
+    container_name: postgres
+    hostname: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/data/postgres
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    networks:
+      - nova
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/lib/pgadmin
+    ports:
+      - "${PGADMIN_PORT}:80"
+    networks:
+      - nova
+    restart: unless-stopped
+
+networks:
+  nova:
+    driver: bridge
+
+volumes:
+    postgres:
+    pgadmin:
