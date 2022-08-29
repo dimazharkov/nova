@@ -2,7 +2,6 @@ import core.auth as auth
 from fastapi import APIRouter, Request, Depends, HTTPException, status
 from fastapi.responses import HTMLResponse
 from sqlalchemy.orm import Session
-from sqlalchemy_utils import database_exists, create_database
 from core.config import settings
 
 from db.session import get_db
@@ -28,11 +27,6 @@ async def init(db: Session = Depends(get_db), user: User = Depends(auth.get_curr
             status_code = status.HTTP_401_UNAUTHORIZED,
             detail = f"Acceess denied",
         )
-
-    #if database_exists(settings.DB_URL):
-    #    return {"result": "db is already initiated"}
-
-    #create_database(settings.DB_URL)
 
     db.add(Currency(
         label = "PLN"

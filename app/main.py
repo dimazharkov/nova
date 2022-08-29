@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from core.config import settings
 from core.router import api_router
-from db.session import engine
+from db.session import create_db
 from models.base import Model
 
 def include_router(app):
@@ -9,7 +9,7 @@ def include_router(app):
 
 def create_tables():
 	Model.metadata.create_all(
-		bind = engine
+		bind = create_db()
 	)
 
 def start_application():
